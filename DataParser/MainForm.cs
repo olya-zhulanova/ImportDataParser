@@ -23,6 +23,7 @@ namespace DataParser
         DataTypeConverter dtConverter;
         XmlElement xRoot;
         bool fileChosen = false;
+        WordDocCreator creator;
 
         public MainForm()
         {
@@ -31,6 +32,7 @@ namespace DataParser
             fieldDataTypes = new List<string>();
             fieldDescriptions = new List<string>();
             headers = new List<string> { "Поле", "Тип данных", "Описание" };
+            creator = new WordDocCreator();
         }
 
         private void getTableName(object sender, EventArgs e)
@@ -155,64 +157,8 @@ namespace DataParser
         private void CreateAndWriteTable()
         {
             document = new Document();
-            Section sec = document.AddSection();
-            Table table = sec.AddTable();
 
-            table.ResetCells(fieldNames.Count + 1, headers.Count);
-
-            TableRow headerRow = table.Rows[0];
-            headerRow.Height = 23;
-
-            TextRange text = new TextRange(document);
-            Paragraph paragraph;
-
-            for (int i = 0; i < headers.Count; i++)
-            {
-                paragraph = headerRow.Cells[i].AddParagraph();
-                headerRow.Cells[i].CellFormat.VerticalAlignment = VerticalAlignment.Middle;
-                paragraph.Format.HorizontalAlignment = HorizontalAlignment.Center;
-                text = paragraph.AppendText(headers[i]);
-                text.CharacterFormat.FontName = "Times New Roman";
-                text.CharacterFormat.FontSize = 14;
-                text.CharacterFormat.TextColor = Color.Black;
-                text.CharacterFormat.Bold = true;
-            }
-
-            TableRow DataRow;
-
-            for (int r = 0; r < fieldNames.Count; r++)
-            {
-                DataRow = table.Rows[r + 1];
-                DataRow.Height = 35;
-
-                for (int c = 0; c < headers.Count; c++)
-                {
-                    DataRow.Cells[c].CellFormat.VerticalAlignment = VerticalAlignment.Middle;
-                    paragraph = DataRow.Cells[c].AddParagraph();
-
-                    if (c == 0)
-                    {
-                        DataRow.Cells[c].Width = 250;
-                        text = paragraph.AppendText($"[{fieldNames[r]}]");
-                    }
-                    if (c == 1)
-                    {
-                        DataRow.Cells[c].Width = 150;
-                        text = paragraph.AppendText($"[{fieldDataTypes[r]}]");
-                    }
-                    if (c == 2)
-                    {
-                        DataRow.Cells[c].Width = 300;
-                        text = paragraph.AppendText(fieldDescriptions[r]);
-                    }
-                    paragraph.Format.HorizontalAlignment = HorizontalAlignment.Left;
-                    text.CharacterFormat.FontName = "Times New Roman";
-                    text.CharacterFormat.FontSize = 14;
-                    text.CharacterFormat.TextColor = Color.Black;
-                }
-            }
-
-            table.TableFormat.Borders.BorderType = Spire.Doc.Documents.BorderStyle.Single;
+            creator.CreateTable(document, headers, new List<List<string>> { fieldNames, fieldDataTypes, fieldDescriptions });
         }
 
         private void CheckFileChosen(Action callback)

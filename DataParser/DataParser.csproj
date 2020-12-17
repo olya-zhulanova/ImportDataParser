@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordDocCreator.cs" />
     <EmbeddedResource Include="frmTableName.resx">
       <DependentUpon>frmTableName.cs</DependentUpon>
     </EmbeddedResource>
