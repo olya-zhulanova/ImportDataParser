@@ -13,11 +13,6 @@ namespace DataParser
         Paragraph paragraph;
         Document document;
 
-        public WordDocCreator()
-        {
-            document = new Document();
-        }
-
         private void DrawHeader(Table table, List<string> header)
         {
             TableRow headerRow = table.Rows[0];
@@ -75,6 +70,7 @@ namespace DataParser
 
         public Document CreateTable(List<string> header, List<List<string>> data)
         {
+            document = new Document();
             Section sec = document.AddSection();
             Table table = sec.AddTable();
 

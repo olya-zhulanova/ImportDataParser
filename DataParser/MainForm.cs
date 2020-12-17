@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml;
-using System.Drawing;
 using Spire.Doc;
-using Spire.Doc.Documents;
-using Spire.Doc.Fields;
-using HorizontalAlignment = Spire.Doc.Documents.HorizontalAlignment;
 
 namespace DataParser
 {
@@ -145,7 +141,7 @@ namespace DataParser
                 {
                     fieldNames.Add(n.SelectSingleNode("@Name").Value);
                     fieldDataTypes.Add(n.SelectSingleNode("@DataType").Value);
-                    fieldDescriptions.Add(n.SelectSingleNode("@HintText").Value);
+                    fieldDescriptions.Add(n.SelectSingleNode("@Caption").Value);
                 }
 
                 XmlNode dataTypes = xRoot.SelectSingleNode("DataTypes");
