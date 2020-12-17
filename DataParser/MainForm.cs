@@ -94,7 +94,7 @@ namespace DataParser
             tableNameForm.TopMost = true;
         }
 
-        private void OpenDocument()
+        private void OpenSourceFile()
         {
             OpenFileDialog OD = new OpenFileDialog();
             OD.Title = "Open File";
@@ -156,9 +156,7 @@ namespace DataParser
 
         private void CreateAndWriteTable()
         {
-            document = new Document();
-
-            creator.CreateTable(document, headers, new List<List<string>> { fieldNames, fieldDataTypes, fieldDescriptions });
+            document = creator.CreateTable(headers, new List<List<string>> { fieldNames, fieldDataTypes, fieldDescriptions });
         }
 
         private void CheckFileChosen(Action callback)
@@ -168,7 +166,7 @@ namespace DataParser
             else
             {
                 MessageBox.Show("File is not selected!");
-                OpenDocument();
+                OpenSourceFile();
             }
         }
 
@@ -184,7 +182,7 @@ namespace DataParser
 
         private void selectFileBtn_Click(object sender, EventArgs e)
         {
-            OpenDocument();
+            OpenSourceFile();
         }
 
         private void SaveDocument()

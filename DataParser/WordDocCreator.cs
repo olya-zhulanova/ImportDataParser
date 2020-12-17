@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using Spire.Doc;
 using Spire.Doc.Documents;
 using Spire.Doc.Fields;
@@ -14,8 +11,14 @@ namespace DataParser
     {
         TextRange text;
         Paragraph paragraph;
+        Document document;
 
-        private void DrawHeader(Document document, Table table, List<string> header)
+        public WordDocCreator()
+        {
+            document = new Document();
+        }
+
+        private void DrawHeader(Table table, List<string> header)
         {
             TableRow headerRow = table.Rows[0];
             headerRow.Height = 23;
@@ -33,7 +36,7 @@ namespace DataParser
             }
         }
 
-        private void DrawDataRows(Document document, Table table, List<List<string>> data)
+        private void DrawDataRows(Table table, List<List<string>> data)
         {
             TableRow DataRow;
 
@@ -70,17 +73,19 @@ namespace DataParser
             }
         }
 
-        public void CreateTable(Document document, List<string> header, List<List<string>> data)
+        public Document CreateTable(List<string> header, List<List<string>> data)
         {
             Section sec = document.AddSection();
             Table table = sec.AddTable();
 
             table.ResetCells(data[0].Count + 1, header.Count);
 
-            DrawHeader(document, table, header);
-            DrawDataRows(document, table, data);
+            DrawHeader(table, header);
+            DrawDataRows(table, data);
 
             table.TableFormat.Borders.BorderType = Spire.Doc.Documents.BorderStyle.Single;
+
+            return document;
         }
     }
 }
