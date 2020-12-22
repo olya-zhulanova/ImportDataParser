@@ -45,21 +45,9 @@ namespace DataParser
                     DataRow.Cells[c].CellFormat.VerticalAlignment = VerticalAlignment.Middle;
                     paragraph = DataRow.Cells[c].AddParagraph();
 
-                    if (c == 0)
-                    {
-                        DataRow.Cells[c].Width = 250;
-                        text = paragraph.AppendText($"[{data[0][r]}]");
-                    }
-                    if (c == 1)
-                    {
-                        DataRow.Cells[c].Width = 150;
-                        text = paragraph.AppendText($"[{data[1][r]}]");
-                    }
-                    if (c == 2)
-                    {
-                        DataRow.Cells[c].Width = 300;
-                        text = paragraph.AppendText($"{data[2][r]}");
-                    }
+                    DataRow.Cells[c].Width = 250;
+                    text = paragraph.AppendText($"[{data[c][r]}]");
+
                     paragraph.Format.HorizontalAlignment = HorizontalAlignment.Left;
                     text.CharacterFormat.FontName = "Times New Roman";
                     text.CharacterFormat.FontSize = 14;
